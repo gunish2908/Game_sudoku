@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <h1>Sudoku Challenge</h1>
+            <div class="logo">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone (optional)</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                </div>
+                <button type="submit" class="primary-btn">Login</button>
+            </form>
+        </div>
+        
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen">
+            <h1>Sudoku Challenge</h1>
+            <div class="logo">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <div class="user-greeting">
+                Welcome, <span id="user-name">Player</span>!
+                <button id="profile-btn" class="icon-btn" aria-label="View profile">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+            <div class="difficulty-selection">
+                <h2>Select Difficulty</h2>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn selected" data-difficulty="easy">
+                        <span>Easy</span>
+                        <small>3 Stars</small>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="medium">
+                        <span>Medium</span>
+                        <small>2 Stars</small>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="hard">
+                        <span>Hard</span>
+                        <small>1 Star</small>
+                    </button>
+                </div>
+                <button id="start-game" class="primary-btn">Start Game</button>
+            </div>
+        </div>
+        
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <h2>Sudoku Challenge</h2>
+                <div class="game-stats">
+                    <div class="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer-display">00:00</span>
+                    </div>
+                    <div class="lives">
+                
+                        <div id="hearts-container">
+                            <i class="fas fa-heart live-heart"></i>
+                            <i class="fas fa-heart live-heart"></i>
+                            <i class="fas fa-heart live-heart"></i>
+                        </div>
+                    </div>
+                    <div class="remaining">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <span id="remaining-display">0</span>
+                    </div>
+                </div>
+                <div class="game-buttons">
+                    <button id="new-game" class="icon-btn" aria-label="New game">
+                        <i class="fas fa-redo-alt"></i>
+                    </button>
+                    <button id="home-btn" class="icon-btn" aria-label="Go to home">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="board" class="board" role="grid" aria-label="Sudoku puzzle board"></div>
+            
+            <div class="number-counter">
+                <h3>Numbers Remaining</h3>
+                <div class="counter-grid">
+                    <div class="counter clickable" data-number="1">
+                        <span class="counter-number">1</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="2">
+                        <span class="counter-number">2</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="3">
+                        <span class="counter-number">3</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="4">
+                        <span class="counter-number">4</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="5">
+                        <span class="counter-number">5</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="6">
+                        <span class="counter-number">6</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="7">
+                        <span class="counter-number">7</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="8">
+                        <span class="counter-number">8</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable" data-number="9">
+                        <span class="counter-number">9</span>
+                        <span class="counter-count">9</span>
+                    </div>
+                    <div class="counter clickable erase-button" data-number="0">
+                        <i class="fas fa-eraser"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="message" aria-live="polite"></div>
+        </div>
+        
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="screen">
+            <h2>Player Profile</h2>
+            <div class="profile-info">
+                <div class="user-details">
+                    <h3>Player Info</h3>
+                    <p><strong>Name:</strong> <span id="profile-name"></span></p>
+                    <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                    <p><strong>Phone:</strong> <span id="profile-phone">Not provided</span></p>
+                </div>
+                
+                <div class="stats-container">
+                    <h3>Your Statistics</h3>
+                    
+                    <div class="stats-section">
+                        <h4>Games Played</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Easy</span>
+                                <span id="games-easy" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Medium</span>
+                                <span id="games-medium" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Hard</span>
+                                <span id="games-hard" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total</span>
+                                <span id="games-total" class="stat-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-section">
+                        <h4>Games Won</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Easy</span>
+                                <span id="wins-easy" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Medium</span>
+                                <span id="wins-medium" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Hard</span>
+                                <span id="wins-hard" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total</span>
+                                <span id="wins-total" class="stat-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-section">
+                        <h4>Best Times</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Easy</span>
+                                <span id="best-time-easy" class="stat-value">--:--</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Medium</span>
+                                <span id="best-time-medium" class="stat-value">--:--</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Hard</span>
+                                <span id="best-time-hard" class="stat-value">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="back-home" class="primary-btn">Back to Home</button>
+            <button id="logout-btn" class="secondary-btn">Logout</button>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2>Game Over</h2>
+            <div class="game-over-icon">
+                <i class="fas fa-heart-broken"></i>
+            </div>
+            <p>You've used all your lives!</p>
+            <button id="try-again" class="primary-btn">Try Again</button>
+            <button id="back-to-home" class="secondary-btn">Back to Home</button>
+        </div>
+        
+        <!-- Success Screen -->
+        <div id="success-screen" class="screen">
+            <h2>Success!</h2>
+            <div class="success-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <p>You solved the puzzle in <span id="completion-time">00:00</span>!</p>
+            <div class="achievement" id="new-record" style="display: none;">
+                <i class="fas fa-medal"></i> New personal best time!
+            </div>
+            <button id="play-again" class="primary-btn">Play Again</button>
+            <button id="success-to-home" class="secondary-btn">Back to Home</button>
+        </div>
+        
+        <!-- Confirmation Dialog -->
+        <div id="confirmation-dialog" class="dialog">
+            <div class="dialog-content">
+                <h3>Are you sure?</h3>
+                <p>Your current game progress will be lost.</p>
+                <div class="dialog-buttons">
+                    <button id="confirm-yes" class="primary-btn">Yes</button>
+                    <button id="confirm-no" class="secondary-btn">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="overlay" class="overlay"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
